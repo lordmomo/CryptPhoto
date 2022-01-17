@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Embedding and Encryption</string>
+    <string name="cryptphoto">CryptPhoto</string>
+    <string name="todo">TODO</string>
+    <string name="decrypt">Decrypt</string>
+    <string name="encrypt">Encrypt</string>
+    <string name="enter_your_message">Enter your message</string>
+</resources>

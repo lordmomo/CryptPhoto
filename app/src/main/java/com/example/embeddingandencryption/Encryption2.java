@@ -17,6 +17,8 @@ public class Encryption2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_encryption2);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         gotogallery = findViewById(R.id.SelectImg);
 
         gotogallery.setOnClickListener(new View.OnClickListener() {
@@ -28,4 +30,11 @@ public class Encryption2 extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public boolean onSupportNavigateUp () {
+        onBackPressed();
+        return super.onSupportNavigateUp();
+    }
+
 }

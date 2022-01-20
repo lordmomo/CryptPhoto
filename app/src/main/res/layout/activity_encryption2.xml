@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/krona_one"
         android:gravity="center"
-        android:text="Tap anywhere to open photo"
+        android:text="Tap anywhere to choose photo"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

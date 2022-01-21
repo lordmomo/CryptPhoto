@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Embedding and encryption/app/src/main/res/drawable/ic_baseline_lock_24.xml" value="0.26875" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Embedding and encryption/app/src/main/res/drawable/ic_first_choice.xml" value="0.1" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Embedding and encryption/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.1" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Embedding and encryption/app/src/main/res/layout/activity_decryption.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Embedding and encryption/app/src/main/res/layout/activity_encryption.xml" value="0.264" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Embedding and encryption/app/src/main/res/layout/activity_encryption2.xml" value="0.2526041666666667" />

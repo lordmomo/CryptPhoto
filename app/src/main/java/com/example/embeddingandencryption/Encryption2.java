@@ -36,6 +36,6 @@ public class Encryption2 extends AppCompatActivity {
 
     }
 
-  
+
 
 }

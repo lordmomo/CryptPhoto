@@ -50,7 +50,7 @@ public class Encryption extends AppCompatActivity {
         getSupportActionBar().setTitle("Encryption");
 
         inputText = (EditText)findViewById(R.id.GetMessage);
-        inputPassword = (EditText)findViewById(R.id.Password);
+        inputPassword = (EditText)findViewById(R.id.ePassword);
         confirmPassword =(EditText)findViewById(R.id.ConfirmPassword);
         next =(Button) findViewById(R.id.NextBtn);
         next.setOnClickListener(new View.OnClickListener() {
@@ -161,3 +161,32 @@ public class Encryption extends AppCompatActivity {
     }
 
 }
+
+/*
+* xml to make visibility of password
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_width="336dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="10dp"
+
+        app:layout_constraintBottom_toTopOf="@+id/ConfirmPassword"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/GetMessage"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/purple_700">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/Password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ems="15"
+            android:hint="@string/password"
+            android:inputType="textPassword" />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+* */

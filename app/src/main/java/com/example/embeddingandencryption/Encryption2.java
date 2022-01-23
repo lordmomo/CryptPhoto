@@ -145,4 +145,10 @@ public class Encryption2 extends AppCompatActivity {
 
         }
     }
+    @Override
+    public boolean onSupportNavigateUp () {
+        onBackPressed();
+        return super.onSupportNavigateUp();
+    }
+
 }

@@ -11,32 +11,38 @@
         android:id="@+id/GetMessage"
         android:layout_width="335dp"
         android:layout_height="89dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="36dp"
         android:ems="10"
         android:gravity="start"
         android:hint="@string/enter_your_message"
         android:inputType="textLongMessage|textMultiLine|textPersonName"
         android:textSize="20sp"
+
         android:textStyle="normal"
-        app:layout_constraintBottom_toTopOf="@+id/Password"
+        app:layout_constraintBottom_toTopOf="@+id/ePassword"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintHorizontal_bias="0.525"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="spread_inside" />
+        app:layout_constraintVertical_bias="0.44"
+        app:layout_constraintVertical_chainStyle="spread" />
 
     <EditText
-        android:id="@+id/Password"
+        android:id="@+id/ePassword"
         android:layout_width="336dp"
-        android:layout_height="57dp"
-        android:layout_marginTop="52dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="20dp"
         android:drawableLeft="@drawable/ic_baseline_lock_24"
         android:ems="10"
         android:hint="  Enter password"
+
         android:inputType="textPassword"
         android:textSize="20sp"
         android:textStyle="normal"
         app:layout_constraintBottom_toTopOf="@+id/ConfirmPassword"
+        app:layout_constraintDimensionRatio="w,1:1"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintHorizontal_bias="0.564"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toBottomOf="@+id/GetMessage" />
 
@@ -44,32 +50,32 @@
         android:id="@+id/ConfirmPassword"
         android:layout_width="336dp"
         android:layout_height="64dp"
-        android:layout_marginTop="52dp"
         android:drawableLeft="@drawable/ic_baseline_lock_24"
         android:ems="10"
         android:hint="  Confirm password"
         android:inputType="textPassword"
         android:textSize="20sp"
         android:textStyle="normal"
+        app:layout_constraintBottom_toTopOf="@+id/NextBtn"
         app:layout_constraintDimensionRatio="w,1:1"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintHorizontal_bias="0.538"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/Password" />
+        app:layout_constraintTop_toBottomOf="@+id/ePassword" />
 
     <Button
         android:id="@+id/NextBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:background="#3DDC84"
         android:fontFamily="@font/krona_one"
         android:text="Next"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/ConfirmPassword"
-        app:layout_constraintVertical_bias="0.335" />
+        app:layout_constraintTop_toBottomOf="@+id/ConfirmPassword" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
@@ -84,5 +90,42 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.95" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="125dp"
+        android:layout_height="27dp"
+        android:text="Message"
+        app:layout_constraintBottom_toTopOf="@+id/GetMessage"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintHorizontal_bias="0.088"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="125dp"
+        android:layout_height="27dp"
+        android:text="Password"
+        app:layout_constraintBottom_toTopOf="@+id/ePassword"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintHorizontal_bias="0.088"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/GetMessage"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="125dp"
+        android:layout_height="27dp"
+        android:text="Confirm Password"
+        app:layout_constraintBottom_toTopOf="@+id/ConfirmPassword"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintHorizontal_bias="0.088"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/ePassword"
+        app:layout_constraintVertical_bias="1.0" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

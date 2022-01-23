@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         decrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent( MainActivity.this, Encryption2.class);
+                Intent intent = new Intent( MainActivity.this, Decryption.class);
                 startActivity(intent);
             }
         });

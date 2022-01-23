@@ -86,6 +86,7 @@ public class Encryption extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
+
                   /*  File f3 = new File(Environment.getExternalStorageDirectory().getPath().toString()+"/ImageDB");
                     if(!f3.exists())
                         f3.mkdirs();

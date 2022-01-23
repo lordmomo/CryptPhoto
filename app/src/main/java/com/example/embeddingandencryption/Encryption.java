@@ -163,7 +163,7 @@ public class Encryption extends AppCompatActivity {
 }
 
 /*
-* xml to make visibility of password
+ xml to make visibility of password
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
         android:layout_width="336dp"

@@ -114,6 +114,7 @@ public class Encryption2 extends AppCompatActivity {
         }
     }
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -150,5 +151,6 @@ public class Encryption2 extends AppCompatActivity {
         onBackPressed();
         return super.onSupportNavigateUp();
     }
+
 
 }

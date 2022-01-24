@@ -3,8 +3,10 @@ package com.example.embeddingandencryption;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-//import android.os.Environment;
+
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,14 +16,16 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 */
+import java.io.File;
+import java.io.FileOutputStream;
 import java.security.MessageDigest;
 import java.util.Base64;
+import java.util.Random;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
-//import android.graphics.Bitmap;
-/*
+
 import android.graphics.Point;
 import android.util.Log;
 import android.view.Display;
@@ -30,7 +34,7 @@ import android.view.WindowManager;
 import com.google.zxing.WriterException;
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
-*/
+
 //import java.io.File;
 
 public class Encryption extends AppCompatActivity {
@@ -39,8 +43,8 @@ public class Encryption extends AppCompatActivity {
     String AES = "AES";
     EditText inputText, inputPassword, confirmPassword;
     String outputString, text, password,c_password;
-    //Bitmap bitmap;
-    //QRGEncoder qrgEncoder;
+    Bitmap finalbitmap;
+    QRGEncoder qrgEncoder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +60,7 @@ public class Encryption extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
+               WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
                 Display display = manager.getDefaultDisplay();
                 Point point = new Point();
                 display.getSize(point);
@@ -64,7 +68,7 @@ public class Encryption extends AppCompatActivity {
                 int height = point.y;
                 int dimen = width < height ? width : height;
                 dimen = dimen * 3 / 4;
-                */
+
                 text = getSecretMessage();
                 password = getPassword();
                 c_password = getConfirmPassword();
@@ -73,18 +77,19 @@ public class Encryption extends AppCompatActivity {
                     if(password.equals(c_password)) {
                         try {
                             outputString = encrypt(text, password);
-                       /* qrgEncoder = new QRGEncoder(outputString, null, QRGContents.Type.TEXT, dimen);
+                            qrgEncoder = new QRGEncoder(outputString, null, QRGContents.Type.TEXT, dimen);
                         try {
-                            bitmap = qrgEncoder.encodeAsBitmap();
-
-                           // qrCodeIV.setImageBitmap(bitmap);
+                            finalbitmap = qrgEncoder.encodeAsBitmap();
+                            SaveImage( finalbitmap );
+                            //qrCodeIV.setImageBitmap(bitmap);
                         } catch (WriterException e) {
                             Log.e("Tag", e.toString());
                         }
-                        */
+                        
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+
 
                   /*  File f3 = new File(Environment.getExternalStorageDirectory().getPath().toString()+"/ImageDB");
                     if(!f3.exists())
@@ -117,7 +122,31 @@ public class Encryption extends AppCompatActivity {
         });
 
     }
+    private void SaveImage(Bitmap finalBitmap)
+    {
 
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root + "/crypt_images");
+        boolean wasSuccessful= myDir.mkdirs();
+        if (!wasSuccessful) {
+            System.out.println("was not successful.");
+        }
+        Random generator = new Random();
+        int n = 10000;
+        n = generator.nextInt(n);
+        String fname = "Image-"+ n +".png";
+        File file = new File (myDir, fname);
+        if (file.exists ()) file.delete ();
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            finalBitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+            out.flush();
+            out.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private String encrypt(String Data, String password) throws Exception{
         SecretKeySpec key = generateKey(password);
         Cipher c = Cipher.getInstance(AES);
@@ -162,8 +191,8 @@ public class Encryption extends AppCompatActivity {
 
 }
 
-/*
- xml to make visibility of password
+
+/* xml to make visibility of password
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
         android:layout_width="336dp"
@@ -189,4 +218,4 @@ public class Encryption extends AppCompatActivity {
 
     </com.google.android.material.textfield.TextInputLayout>
 
-* */
+*/

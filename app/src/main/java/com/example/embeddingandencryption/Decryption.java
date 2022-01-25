@@ -50,7 +50,7 @@ public class Decryption extends AppCompatActivity {
    // public static final int IMAGE_PICK_CODE = 102;
 
 
-    String password,message;
+    String password,message,reqMessage;
     String[] storagePermission;
     String AES ="AES";
 
@@ -73,10 +73,10 @@ public class Decryption extends AppCompatActivity {
             public void onActivityResult(Uri result) {
 
                 img.setImageURI(result);
-                String reqMessage= processTheQR();
+                /*String reqMessage= processTheQR();
                 password= ePassword.getText().toString().trim();
-                displayMessage(reqMessage,password);
-
+                message=displayMessage(reqMessage,password);
+                */
             }
         });
         //Handle button click.
@@ -96,7 +96,20 @@ public class Decryption extends AppCompatActivity {
             }
         });
 
+        Extract.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                reqMessage= processTheQR();
+                password= ePassword.getText().toString().trim();
+                if(!password.isEmpty() && !reqMessage.isEmpty()) {
+                    displayMessage(reqMessage, password);
+                }
+                else{
+                    Toast.makeText(Decryption.this,"Provide password and image.",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
 
@@ -141,6 +154,7 @@ public class Decryption extends AppCompatActivity {
         return secretKeySpec;
     }
 
+    //scans the Qr in image format
     public String scanQRImage(Bitmap bMap) {
         String contents = null;
 
@@ -163,15 +177,20 @@ public class Decryption extends AppCompatActivity {
         }
         return contents;
     }
+
+    //Convert the uri of image into bitmap
     private String processTheQR() {
         BitmapDrawable bitmapDrawable = (BitmapDrawable) img.getDrawable();
         Bitmap bitmap = bitmapDrawable.getBitmap();
         String contents =scanQRImage(bitmap);
         return contents;
     }
+
+    //Decrypt the payload of Qr code
     private void displayMessage(String reqMessage,String password){
         try {
             message = decrypt(reqMessage,password);
+
             eMessage.setText(message);
         } catch (Exception e) {
             e.printStackTrace();

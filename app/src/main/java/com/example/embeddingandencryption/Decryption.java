@@ -11,13 +11,25 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.RGBLuminanceSource;
+import com.google.zxing.Reader;
+import com.google.zxing.Result;
+import com.google.zxing.common.HybridBinarizer;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
@@ -32,13 +44,14 @@ public class Decryption extends AppCompatActivity {
 
     public ImageView img;
     public Button ChooseImage,Extract;
-
+    public EditText ePassword;
+    public TextView eMessage;
     public static final int STORAGE_REQUEST = 101;
    // public static final int IMAGE_PICK_CODE = 102;
 
 
-
-    String storagePermission[];
+    String password,message;
+    String[] storagePermission;
     String AES ="AES";
 
     @Override
@@ -46,15 +59,24 @@ public class Decryption extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_decryption);
 
+        ePassword = findViewById(R.id.dPassword);
+        eMessage = findViewById(R.id.etMessage);
         ChooseImage = findViewById(R.id.btChooseFile);
         Extract = findViewById(R.id.btExtract);
         img = findViewById(R.id.ivImage);
+
+
         storagePermission= new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
 
         ActivityResultLauncher<String> launcher = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
             @Override
             public void onActivityResult(Uri result) {
+
                 img.setImageURI(result);
+                String reqMessage= processTheQR();
+                password= ePassword.getText().toString().trim();
+                displayMessage(reqMessage,password);
+
             }
         });
         //Handle button click.
@@ -74,6 +96,7 @@ public class Decryption extends AppCompatActivity {
             }
         });
 
+
     }
 
 
@@ -85,37 +108,13 @@ public class Decryption extends AppCompatActivity {
         boolean result = ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE)==(PackageManager.PERMISSION_GRANTED);
         return result;
     }
-/*
-    private void pickFromGallery() {
-       // CropImage.activity().start(this);
 
-
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent,IMAGE_PICK_CODE);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(resultCode==RESULT_OK && requestCode == IMAGE_PICK_CODE){
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if(resultCode ==RESULT_OK){
-                Uri resultUri = result.getUri();
-                Picasso.with(this).load(resultUri).into(img);
-            }
-        }
-    }
-*/
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(grantResults.length>0){
             boolean storage_accepted= grantResults[0]==(PackageManager.PERMISSION_GRANTED);
             if(!storage_accepted){
-              //  pickFromGallery();
-            //}else{
                 Toast.makeText(this,"Please enable storage permission",Toast.LENGTH_SHORT).show();
             }
         }
@@ -142,11 +141,50 @@ public class Decryption extends AppCompatActivity {
         return secretKeySpec;
     }
 
+    public String scanQRImage(Bitmap bMap) {
+        String contents = null;
+
+        int[] intArray = new int[bMap.getWidth()*bMap.getHeight()];
+        //copy pixel data from the Bitmap into the 'intArray' array
+        bMap.getPixels(intArray, 0, bMap.getWidth(), 0, 0, bMap.getWidth(), bMap.getHeight());
+
+        LuminanceSource source = new RGBLuminanceSource(bMap.getWidth(), bMap.getHeight(), intArray);
+        BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+
+        Reader reader = new MultiFormatReader();
+        try {
+            Result result = reader.decode(bitmap);
+            contents = result.getText();
+            Toast.makeText(Decryption.this, "Message Decrypted", Toast.LENGTH_SHORT).show();
+
+        }
+        catch (Exception e) {
+            Log.e("QrTest", "Error decoding barcode", e);
+        }
+        return contents;
+    }
+    private String processTheQR() {
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) img.getDrawable();
+        Bitmap bitmap = bitmapDrawable.getBitmap();
+        String contents =scanQRImage(bitmap);
+        return contents;
+    }
+    private void displayMessage(String reqMessage,String password){
+        try {
+            message = decrypt(reqMessage,password);
+            eMessage.setText(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return super.onSupportNavigateUp();
 
     }
+
+
 
 }

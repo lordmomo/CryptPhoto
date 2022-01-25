@@ -78,33 +78,17 @@ public class Encryption extends AppCompatActivity {
                         try {
                             outputString = encrypt(text, password);
                             qrgEncoder = new QRGEncoder(outputString, null, QRGContents.Type.TEXT, dimen);
-                        try {
-                            finalbitmap = qrgEncoder.encodeAsBitmap();
-                            SaveImage( finalbitmap );
-                            //qrCodeIV.setImageBitmap(bitmap);
-                        } catch (WriterException e) {
-                            Log.e("Tag", e.toString());
-                        }
-                        
+                            try {
+                              finalbitmap = qrgEncoder.encodeAsBitmap();
+                                SaveImage( finalbitmap );
+                             //qrCodeIV.setImageBitmap(bitmap);
+                            } catch (WriterException e) {
+                             Log.e("Tag", e.toString());
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
 
-
-                  /*  File f3 = new File(Environment.getExternalStorageDirectory().getPath().toString()+"/ImageDB");
-                    if(!f3.exists())
-                        f3.mkdirs();
-                    OutputStream outStream = null;
-                    File file= new File(Environment.getExternalStorageDirectory()+"/ImageDB"+"seconds"+".png");
-                    try{
-                        outStream= new FileOutputStream(file);
-                        mBitmap.compress(Bitmap.CompressFormat.PNG,85,outStream);
-                        outStream.close();
-                        Toast.makeText(getApplicationContext(),"Saved",Toast.LENGTH_SHORT);
-                    }catch(Exception e){
-                        e.printStackTrace();
-                     }
-                    */
                         Intent intent = new Intent(Encryption.this, Encryption2.class);
                         //intent.putExtra("");
                         startActivity(intent);
@@ -126,15 +110,12 @@ public class Encryption extends AppCompatActivity {
     {
 
         String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/crypt_images");
+        File myDir = new File(root + "/CryptPhoto");
         boolean wasSuccessful= myDir.mkdirs();
         if (!wasSuccessful) {
             System.out.println("was not successful.");
         }
-        Random generator = new Random();
-        int n = 10000;
-        n = generator.nextInt(n);
-        String fname = "Image-"+ n +".png";
+        String fname = "Image-1.png";
         File file = new File (myDir, fname);
         if (file.exists ()) file.delete ();
         try {
@@ -191,31 +172,3 @@ public class Encryption extends AppCompatActivity {
 
 }
 
-
-/* xml to make visibility of password
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
-        android:layout_width="336dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="10dp"
-
-        app:layout_constraintBottom_toTopOf="@+id/ConfirmPassword"
-        app:layout_constraintEnd_toStartOf="@+id/guideline6"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/GetMessage"
-        app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/purple_700">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/Password"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:ems="15"
-            android:hint="@string/password"
-            android:inputType="textPassword" />
-
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-*/

@@ -34,6 +34,7 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.security.MessageDigest;
+import java.security.spec.ECField;
 import java.util.Base64;
 
 import javax.crypto.Cipher;
@@ -99,14 +100,22 @@ public class Decryption extends AppCompatActivity {
         Extract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                reqMessage= processTheQR();
-                password= ePassword.getText().toString().trim();
-                if(!password.isEmpty() && !reqMessage.isEmpty()) {
-                    displayMessage(reqMessage, password);
-                }
+                if (!( img.getDrawable() == null)) {
+                   reqMessage = processTheQR();
+                   password = ePassword.getText().toString().trim();
+                   if (!password.isEmpty() && !reqMessage.isEmpty()) {
+                       try {
+                           displayMessage(reqMessage, password);
+                       } catch (Exception e) {
+                           e.printStackTrace();
+                       }
+                   } else {
+                       Toast.makeText(Decryption.this, "Provide password.", Toast.LENGTH_SHORT).show();
+                   }
+               }
                 else{
-                    Toast.makeText(Decryption.this,"Provide password and image.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Decryption.this, "Provide image", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
@@ -196,6 +205,7 @@ public class Decryption extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
 
     @Override
     public boolean onSupportNavigateUp() {

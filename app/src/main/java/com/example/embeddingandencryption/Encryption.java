@@ -80,8 +80,7 @@ public class Encryption extends AppCompatActivity {
                             qrgEncoder = new QRGEncoder(outputString, null, QRGContents.Type.TEXT, dimen);
                             try {
                               finalbitmap = qrgEncoder.encodeAsBitmap();
-                                SaveImage( finalbitmap );
-                             //qrCodeIV.setImageBitmap(bitmap);
+                              SaveImage(finalbitmap);
                             } catch (WriterException e) {
                              Log.e("Tag", e.toString());
                             }
@@ -90,7 +89,6 @@ public class Encryption extends AppCompatActivity {
                         }
 
                         Intent intent = new Intent(Encryption.this, Encryption2.class);
-                        //intent.putExtra("");
                         startActivity(intent);
                     }
                     else{

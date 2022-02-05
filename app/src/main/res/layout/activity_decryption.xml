@@ -22,8 +22,10 @@
     <Button
         android:id="@+id/btChooseFile"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
+        android:fontFamily="@font/krona_one"
         android:text="Choose Image"
+        android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/guideline9"
         app:layout_constraintEnd_toStartOf="@+id/btExtract"
         app:layout_constraintHorizontal_bias="0.5"
@@ -33,8 +35,10 @@
     <Button
         android:id="@+id/btExtract"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:text="EXTRACT"
+        android:fontFamily="@font/krona_one"
+        android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/guideline9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -107,35 +111,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
-    <TextView
-        android:id="@+id/tvDecodedMessage"
-        android:layout_width="130dp"
-        android:layout_height="27dp"
-        android:text="Decoded Message"
-        app:layout_constraintBottom_toTopOf="@+id/etMessage"
-        app:layout_constraintEnd_toStartOf="@+id/guideline8"
-        app:layout_constraintHorizontal_bias="0.085"
-        app:layout_constraintStart_toStartOf="@+id/guideline7"
-        app:layout_constraintTop_toBottomOf="@+id/btChooseFile"
-        app:layout_constraintVertical_bias="1.0" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.85" />
-
-    <TextView
-        android:id="@+id/etMessage"
-        android:layout_width="336dp"
-        android:layout_height="64dp"
-        android:hint="Message"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline8"
-        app:layout_constraintHorizontal_bias="0.538"
-        app:layout_constraintStart_toStartOf="@+id/guideline7"
-        app:layout_constraintTop_toTopOf="@+id/guideline9"
-        app:layout_constraintVertical_bias="0.407" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

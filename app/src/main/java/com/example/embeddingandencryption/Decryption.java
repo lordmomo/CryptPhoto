@@ -46,12 +46,11 @@ public class Decryption extends AppCompatActivity {
     public ImageView img;
     public Button ChooseImage,Extract;
     public EditText ePassword;
-    public TextView eMessage;
     public static final int STORAGE_REQUEST = 101;
    // public static final int IMAGE_PICK_CODE = 102;
 
 
-    String password,message,reqMessage;
+    String password,message,reqMessage,passMessage;
     String[] storagePermission;
     String AES ="AES";
 
@@ -60,8 +59,10 @@ public class Decryption extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_decryption);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Decryption");
+
         ePassword = findViewById(R.id.dPassword);
-        eMessage = findViewById(R.id.etMessage);
         ChooseImage = findViewById(R.id.btChooseFile);
         Extract = findViewById(R.id.btExtract);
         img = findViewById(R.id.ivImage);
@@ -105,7 +106,12 @@ public class Decryption extends AppCompatActivity {
                    password = ePassword.getText().toString().trim();
                    if (!password.isEmpty() && !reqMessage.isEmpty()) {
                        try {
-                           displayMessage(reqMessage, password);
+                          passMessage= displayMessage(reqMessage, password);
+
+                          Intent intent = new Intent(Decryption.this,DisplayDecryptedMessage.class);
+                          intent.putExtra("dMessage",passMessage);
+                          startActivity(intent);
+
                        } catch (Exception e) {
                            e.printStackTrace();
                        }
@@ -196,14 +202,16 @@ public class Decryption extends AppCompatActivity {
     }
 
     //Decrypt the payload of Qr code
-    private void displayMessage(String reqMessage,String password){
+    private String displayMessage(String reqMessage,String password){
         try {
             message = decrypt(reqMessage,password);
 
-            eMessage.setText(message);
+
+            //eMessage.setText(message);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return message;
     }
 
 

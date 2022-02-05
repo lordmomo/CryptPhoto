@@ -21,7 +21,7 @@
         android:textStyle="normal"
         app:layout_constraintBottom_toTopOf="@+id/ePassword"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
-        app:layout_constraintHorizontal_bias="0.525"
+        app:layout_constraintHorizontal_bias="0.684"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.44"
@@ -65,13 +65,13 @@
 
     <Button
         android:id="@+id/NextBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#3DDC84"
-        android:fontFamily="@font/krona_one"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
         android:text="Next"
+        android:fontFamily="@font/krona_one"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/circular_btn"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
@@ -89,7 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.95" />
+        app:layout_constraintGuide_percent="0.9537713" />
 
     <TextView
         android:id="@+id/textView2"
@@ -98,7 +98,7 @@
         android:text="Message"
         app:layout_constraintBottom_toTopOf="@+id/GetMessage"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
-        app:layout_constraintHorizontal_bias="0.088"
+        app:layout_constraintHorizontal_bias="0.084"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />

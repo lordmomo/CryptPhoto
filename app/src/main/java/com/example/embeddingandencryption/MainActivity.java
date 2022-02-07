@@ -1,5 +1,6 @@
 package com.example.embeddingandencryption;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,6 +10,7 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +24,11 @@ public class MainActivity extends AppCompatActivity {
 
         encrypt = findViewById(R.id.encrypt_button);
         decrypt = findViewById(R.id.decrypt_button);
+
+        ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.CAMERA},100);
+        ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},101);
+        ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},101);
+
 
         encrypt.setOnClickListener(new View.OnClickListener() {
             @Override

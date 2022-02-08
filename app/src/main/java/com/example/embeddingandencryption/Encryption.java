@@ -11,16 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-/*
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-*/
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.security.MessageDigest;
 import java.util.Base64;
-import java.util.Random;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -35,7 +30,6 @@ import com.google.zxing.WriterException;
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 
-//import java.io.File;
 
 public class Encryption extends AppCompatActivity {
 

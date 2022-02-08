@@ -17,7 +17,9 @@
             android:autoLink="web"
             android:lineSpacingExtra="5sp"
             android:padding="10dp"
-            android:text="TextView" />
+            android:text="TextView"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
     </ScrollView>
 
 </RelativeLayout>

@@ -39,20 +39,21 @@ import java.util.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-
 public class Decryption extends AppCompatActivity {
 
-//yaad hos
+    //yaad hos
     public ImageView img;
     public Button ChooseImage,Extract;
     public EditText ePassword;
     public static final int STORAGE_REQUEST = 101;
-   // public static final int IMAGE_PICK_CODE = 102;
+    // public static final int IMAGE_PICK_CODE = 102;
 
 
     String password,message,reqMessage,passMessage;
     String[] storagePermission;
     String AES ="AES";
+
+    private boolean isSISelected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +76,7 @@ public class Decryption extends AppCompatActivity {
             public void onActivityResult(Uri result) {
 
                 img.setImageURI(result);
-                /*String reqMessage= processTheQR();
-                password= ePassword.getText().toString().trim();
-                message=displayMessage(reqMessage,password);
-                */
+                isSISelected = true;
             }
         });
         //Handle button click.
@@ -87,42 +85,68 @@ public class Decryption extends AppCompatActivity {
             public void onClick(View view) {
                 //Permission demo project's code
 
-                    if(!checkStoragePermission()){
-                        requestStoragePermission();
-                    }
-                    else{
-                        //pickFromGallery();
-                        launcher.launch("image/*");
+                if(!checkStoragePermission()){
+                    requestStoragePermission();
+                }
+                else{
+                    //pickFromGallery();
+                    launcher.launch("image/*");
 
-                    }
+                }
             }
         });
 
         Extract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!( img.getDrawable() == null)) {
-                   reqMessage = processTheQR();
-                   password = ePassword.getText().toString().trim();
-                   if (!password.isEmpty() && !reqMessage.isEmpty()) {
-                       try {
-                          passMessage= displayMessage(reqMessage, password);
 
-                          Intent intent = new Intent(Decryption.this,DisplayDecryptedMessage.class);
-                          intent.putExtra("dMessage",passMessage);
-                          startActivity(intent);
+                if(isSISelected)
+                {
+                    reqMessage = processTheQR();
+                    password = ePassword.getText().toString().trim();
+                    if (!password.isEmpty() && !reqMessage.isEmpty()) {
+                        try {
+                            passMessage= displayMessage(reqMessage, password);
 
-                       } catch (Exception e) {
-                           e.printStackTrace();
-                       }
-                   } else {
-                       Toast.makeText(Decryption.this, "Provide password.", Toast.LENGTH_SHORT).show();
-                   }
-               }
+                            Intent intent = new Intent(Decryption.this,DisplayDecryptedMessage.class);
+                            intent.putExtra("dMessage",passMessage);
+                            startActivity(intent);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Toast.makeText(Decryption.this, "Provide password.", Toast.LENGTH_SHORT).show();
+                    }
+                }
                 else{
+                    Toast.makeText(Decryption.this, "Provide image", Toast.LENGTH_SHORT).show();
+                }
+                /*
+                if (!( img.getDrawable() == null)) {
+                    reqMessage = processTheQR();
+                    password = ePassword.getText().toString().trim();
+                    if (!password.isEmpty() && !reqMessage.isEmpty()) {
+                        try {
+                            passMessage= displayMessage(reqMessage, password);
+
+                            Intent intent = new Intent(Decryption.this,DisplayDecryptedMessage.class);
+                            intent.putExtra("dMessage",passMessage);
+                            startActivity(intent);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Toast.makeText(Decryption.this, "Provide password.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+
                     Toast.makeText(Decryption.this, "Provide image", Toast.LENGTH_SHORT).show();
 
                 }
+                */
             }
         });
     }
@@ -206,8 +230,6 @@ public class Decryption extends AppCompatActivity {
         try {
             message = decrypt(reqMessage,password);
 
-
-            //eMessage.setText(message);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -221,7 +243,5 @@ public class Decryption extends AppCompatActivity {
         return super.onSupportNavigateUp();
 
     }
-
-
 
 }

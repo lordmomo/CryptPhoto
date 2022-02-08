@@ -47,4 +47,6 @@ dependencies {
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
+    implementation group: 'com.google.guava', name: 'guava', version: '20.0'
+
 }

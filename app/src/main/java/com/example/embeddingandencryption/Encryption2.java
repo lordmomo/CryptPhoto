@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -22,17 +21,15 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 public class Encryption2 extends AppCompatActivity {
 
-
-   public  ImageView img;
+   public  ImageView c_img;
    public  Button ChooseImage,Embedd;
-
-    //private static final int IMAGE_PICK_CODE = 100;
-    //private static final int PERMISSION_CODE = 101;
 
     public static final int CAMERA_REQUEST = 100;
     public static final int STORAGE_REQUEST = 101;
-    String cameraPermission[];
-    String storagePermission[];
+    String[] cameraPermission;
+    String[] storagePermission;
+
+    private boolean isImageSelected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +37,11 @@ public class Encryption2 extends AppCompatActivity {
         setContentView(R.layout.activity_encryption2);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Encryption");
 
         ChooseImage = findViewById(R.id.btChooseFile);
         Embedd = findViewById(R.id.btExtract);
-        img = findViewById(R.id.ivImage);
+        c_img = findViewById(R.id.ivImage);
 
         cameraPermission = new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermission= new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -69,6 +67,19 @@ public class Encryption2 extends AppCompatActivity {
                     else{
                         pickFromGallery();
                     }
+                }
+            }
+        });
+
+        Embedd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isImageSelected){
+                  //  Embedding();
+                    Intent intent = new Intent(Encryption2.this,Encryption3.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(Encryption2.this, "Provide image", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -109,7 +120,8 @@ public class Encryption2 extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if(resultCode ==RESULT_OK){
                 Uri resultUri = result.getUri();
-                Picasso.with(this).load(resultUri).into(img);
+                Picasso.with(this).load(resultUri).into(c_img);
+                isImageSelected = true;
             }
         }
     }
@@ -143,14 +155,13 @@ public class Encryption2 extends AppCompatActivity {
                 }
             }
             break;
-
         }
     }
+
     @Override
     public boolean onSupportNavigateUp () {
         onBackPressed();
         return super.onSupportNavigateUp();
     }
-
 
 }

@@ -229,7 +229,6 @@ public class Decryption extends AppCompatActivity {
     private String displayMessage(String reqMessage,String password){
         try {
             message = decrypt(reqMessage,password);
-
         } catch (Exception e) {
             e.printStackTrace();
         }

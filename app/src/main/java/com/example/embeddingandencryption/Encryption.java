@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.BufferUnderflowException;
+import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.util.Base64;
 
@@ -39,6 +41,7 @@ public class Encryption extends AppCompatActivity {
     String outputString, text, password,c_password;
     Bitmap finalbitmap;
     QRGEncoder qrgEncoder;
+    byte[] qrByteArray;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +77,7 @@ public class Encryption extends AppCompatActivity {
                             qrgEncoder = new QRGEncoder(outputString, null, QRGContents.Type.TEXT, dimen);
                             try {
                               finalbitmap = qrgEncoder.encodeAsBitmap();
+                              qrByteArray = ByteToArray(finalbitmap);
                               SaveImage(finalbitmap);
                             } catch (WriterException e) {
                              Log.e("Tag", e.toString());
@@ -83,6 +87,7 @@ public class Encryption extends AppCompatActivity {
                         }
 
                         Intent intent = new Intent(Encryption.this, Encryption2.class);
+                        intent.putExtra("secret_message",qrByteArray);
                         startActivity(intent);
                     }
                     else{
@@ -138,6 +143,20 @@ public class Encryption extends AppCompatActivity {
         byte[] key= digest.digest();
         SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
         return secretKeySpec;
+    }
+
+    private byte[] ByteToArray(Bitmap bmp){
+        int size = bmp.getRowBytes() * bmp.getHeight();
+
+        ByteBuffer b = ByteBuffer.allocate(size);
+        bmp.copyPixelsToBuffer(b);
+        byte[] bytes = new byte[size];
+        try {
+            b.get(bytes, 0, bytes.length);
+        } catch (BufferUnderflowException e) {
+            // always happens
+        }
+        return bytes;
     }
 
 

@@ -7,8 +7,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -19,9 +23,12 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 public class Encryption2 extends AppCompatActivity {
 
-   public  ImageView c_img;
+   public  ImageView cover_img;
    public  Button ChooseImage,Embedd;
 
     public static final int CAMERA_REQUEST = 100;
@@ -41,7 +48,7 @@ public class Encryption2 extends AppCompatActivity {
 
         ChooseImage = findViewById(R.id.btChooseFile);
         Embedd = findViewById(R.id.btExtract);
-        c_img = findViewById(R.id.ivImage);
+        cover_img = findViewById(R.id.ivImage);
 
         cameraPermission = new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermission= new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -71,12 +78,18 @@ public class Encryption2 extends AppCompatActivity {
             }
         });
 
+        Intent intent = getIntent();
+        byte[] hidden_image = intent.getByteArrayExtra("secret_message");
+        Bitmap s_image = BitmapFactory.decodeByteArray( hidden_image, 0, hidden_image .length);
+
         Embedd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(isImageSelected){
-                  //  Embedding();
+                    Bitmap c_image = imageToBitmap();
+                    Bitmap stegImage = new Embedding.embedSecretImage(c_image,s_image);
                     Intent intent = new Intent(Encryption2.this,Encryption3.class);
+
                     startActivity(intent);
                 }else{
                     Toast.makeText(Encryption2.this, "Provide image", Toast.LENGTH_SHORT).show();
@@ -120,7 +133,7 @@ public class Encryption2 extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if(resultCode ==RESULT_OK){
                 Uri resultUri = result.getUri();
-                Picasso.with(this).load(resultUri).into(c_img);
+                Picasso.with(this).load(resultUri).into(cover_img);
                 isImageSelected = true;
             }
         }
@@ -157,6 +170,28 @@ public class Encryption2 extends AppCompatActivity {
             break;
         }
     }
+    private Bitmap imageToBitmap() {
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) cover_img.getDrawable();
+        Bitmap bitmap = bitmapDrawable.getBitmap();
+        return bitmap;
+    }
+
+    public static Bitmap decodeUriToBitmap(Context mContext, Uri sendUri) {
+        Bitmap getBitmap = null;
+        try {
+            InputStream image_stream;
+            try {
+                image_stream = mContext.getContentResolver().openInputStream(sendUri);
+                getBitmap = BitmapFactory.decodeStream(image_stream);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getBitmap;
+    }
+
 
     @Override
     public boolean onSupportNavigateUp () {

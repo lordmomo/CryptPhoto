@@ -1,24 +1,32 @@
 package com.MomoDev.CryptPhoto;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
 public class Encryption3 extends AppCompatActivity {
 
+    private static int REQUEST_CODE = 101;
     ImageView img;
     Button save,share;
     //public byte[] steg_image;
@@ -43,7 +51,16 @@ public class Encryption3 extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SaveImage();
+                if (ContextCompat.checkSelfPermission(Encryption3.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+
+                    SaveImage();
+
+                }else {
+
+                    askPermission();
+
+                }
+
             }
         });
 
@@ -55,13 +72,18 @@ public class Encryption3 extends AppCompatActivity {
         });
 
     }
+    private void askPermission() {
+
+        ActivityCompat.requestPermissions(Encryption3.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_CODE);
+
+    }
 
     private void SaveImage()
     {
         BitmapDrawable bitmapDrawable = (BitmapDrawable) img.getDrawable();
         Bitmap finalBitmap = bitmapDrawable.getBitmap();
         String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/CryptPhotoV2");
+        File myDir = new File(root + "/CryptPhoto");
         boolean wasSuccessful= myDir.mkdirs();
         if (!wasSuccessful) {
             System.out.println("was not successful.");
@@ -83,7 +105,7 @@ public class Encryption3 extends AppCompatActivity {
 
     }
     private void shareImage(){
-        Uri contentUri = getContentUri();
+        Uri contentUri = getContentUri(getApplicationContext());
         Intent shareint =new Intent(Intent.ACTION_SEND);
         shareint.setType("image/*");
         shareint.putExtra(Intent.EXTRA_SUBJECT, "Subject Here");
@@ -92,26 +114,14 @@ public class Encryption3 extends AppCompatActivity {
         startActivity(Intent.createChooser(shareint,"Share With"));
     }
 
-    private Uri getContentUri()
+    private Uri getContentUri(Context inContext)
     {
         BitmapDrawable Drawable= (BitmapDrawable) img.getDrawable();
         Bitmap bitmap= Drawable.getBitmap();
-
-        File imagesFolder = new File(getCacheDir(),"images");
-        Uri contentUri = null;
-        try{
-            imagesFolder.mkdirs();
-            File file = new File(imagesFolder,"shared_image.png");
-            FileOutputStream stream = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
-            stream.flush();
-            stream.close();
-            contentUri = FileProvider.getUriForFile(this,"com.momodev.savenshare.fileprovider",file);
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return contentUri;
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(),bitmap,"Title",null);
+        return Uri.parse(path);
     }
 
     @Override

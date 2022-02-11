@@ -1,4 +1,4 @@
-package com.example.embeddingandencryption;
+package com.MomoDev.CryptPhoto;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;

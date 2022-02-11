@@ -1,4 +1,4 @@
-package com.example.embeddingandencryption;
+package com.MomoDev.CryptPhoto;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,14 +6,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
-import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.security.MessageDigest;
@@ -39,9 +36,9 @@ public class Encryption extends AppCompatActivity {
     String AES = "AES";
     EditText inputText, inputPassword, confirmPassword;
     String outputString, text, password,c_password;
-    Bitmap finalbitmap;
-    QRGEncoder qrgEncoder;
-    byte[] qrByteArray;
+    public Bitmap finalbitmap;
+    public QRGEncoder qrgEncoder;
+    //public byte[] qrByteArray;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +54,7 @@ public class Encryption extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //dimensions for Qr Code.
                WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
                 Display display = manager.getDefaultDisplay();
                 Point point = new Point();
@@ -69,6 +67,8 @@ public class Encryption extends AppCompatActivity {
                 text = getSecretMessage();
                 password = getPassword();
                 c_password = getConfirmPassword();
+
+                // Check if required information are provide or not.
                 if (!text.isEmpty() && !password.isEmpty() && !c_password.isEmpty())
                 {
                     if(password.equals(c_password)) {
@@ -77,18 +77,23 @@ public class Encryption extends AppCompatActivity {
                             qrgEncoder = new QRGEncoder(outputString, null, QRGContents.Type.TEXT, dimen);
                             try {
                               finalbitmap = qrgEncoder.encodeAsBitmap();
-                              qrByteArray = ByteToArray(finalbitmap);
-                              SaveImage(finalbitmap);
+
+                              //Passing the Qr Code to Encryption2 Activity through BitmapTransfer
+                              BitmapTransfer.setBitmap(finalbitmap);
+                              //qrByteArray = ByteToArray(finalbitmap);
+                              //SaveImage(finalbitmap);
                             } catch (WriterException e) {
                              Log.e("Tag", e.toString());
                             }
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
 
                         Intent intent = new Intent(Encryption.this, Encryption2.class);
-                        intent.putExtra("secret_message",qrByteArray);
                         startActivity(intent);
+                        finish();
+
                     }
                     else{
 
@@ -103,28 +108,7 @@ public class Encryption extends AppCompatActivity {
         });
 
     }
-    private void SaveImage(Bitmap finalBitmap)
-    {
 
-        String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/CryptPhoto");
-        boolean wasSuccessful= myDir.mkdirs();
-        if (!wasSuccessful) {
-            System.out.println("was not successful.");
-        }
-        String fname = "Image-1.png";
-        File file = new File (myDir, fname);
-        if (file.exists ()) file.delete ();
-        try {
-            FileOutputStream out = new FileOutputStream(file);
-            finalBitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
-            out.flush();
-            out.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
     private String encrypt(String Data, String password) throws Exception{
         SecretKeySpec key = generateKey(password);
         Cipher c = Cipher.getInstance(AES);
@@ -135,7 +119,6 @@ public class Encryption extends AppCompatActivity {
     }
 
     //data encodes in messageDigest
-
     private SecretKeySpec generateKey(String password) throws Exception{
         final MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] bytes = password.getBytes("UTF-8");
@@ -147,7 +130,6 @@ public class Encryption extends AppCompatActivity {
 
     private byte[] ByteToArray(Bitmap bmp){
         int size = bmp.getRowBytes() * bmp.getHeight();
-
         ByteBuffer b = ByteBuffer.allocate(size);
         bmp.copyPixelsToBuffer(b);
         byte[] bytes = new byte[size];

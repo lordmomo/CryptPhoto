@@ -6,7 +6,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.example.embeddingandencryption"
+        applicationId "com.MomoDev.CryptPhoto"
         minSdk 26
         targetSdk 32
         versionCode 1
@@ -47,6 +47,7 @@ dependencies {
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
-    implementation group: 'com.google.guava', name: 'guava', version: '20.0'
+    api 'com.google.guava:guava:28.1-android'
+    implementation group: 'com.google.guava', name: 'guava', version: '24.1-jre'
 
 }

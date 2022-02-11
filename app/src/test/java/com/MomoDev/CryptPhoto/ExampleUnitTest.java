@@ -1,4 +1,4 @@
-package com.example.embeddingandencryption;
+package com.MomoDev.CryptPhoto;
 
 import org.junit.Test;
 

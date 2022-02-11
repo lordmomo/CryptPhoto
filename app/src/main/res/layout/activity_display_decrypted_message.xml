@@ -3,11 +3,12 @@
 
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/screen_background"
     tools:context=".DisplayDecryptedMessage">
 
     <ScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
@@ -18,8 +19,8 @@
             android:lineSpacingExtra="5sp"
             android:padding="10dp"
             android:text="TextView"
-            android:textSize="20sp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/text_color"
+            android:textSize="20sp" />
     </ScrollView>
 
 </RelativeLayout>

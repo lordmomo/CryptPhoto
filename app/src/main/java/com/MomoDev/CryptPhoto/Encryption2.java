@@ -1,4 +1,4 @@
-package com.example.embeddingandencryption;
+package com.MomoDev.CryptPhoto;
 
 import android.Manifest;
 
@@ -7,14 +7,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,21 +23,21 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.File;
 
 public class Encryption2 extends AppCompatActivity {
 
-   public  ImageView cover_img;
-   public  Button ChooseImage,Embedd;
+     public  ImageView cover_img;
+    public  Button ChooseImage,Embedd;
 
     public static final int CAMERA_REQUEST = 100;
+    public Bitmap c_image,stegImage;
+    private boolean isImageSelected = false;
     public static final int STORAGE_REQUEST = 101;
+
     String[] cameraPermission;
     String[] storagePermission;
-
-    private boolean isImageSelected = false;
-
+    String FolderName= "CryptPhotoV2";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,25 +72,24 @@ public class Encryption2 extends AppCompatActivity {
                         requestStoragePermission();
                     }
                     else{
+                        createDirectory(FolderName);
                         pickFromGallery();
                     }
                 }
             }
         });
 
-        Intent intent = getIntent();
-        byte[] hidden_image = intent.getByteArrayExtra("secret_message");
-        Bitmap s_image = BitmapFactory.decodeByteArray( hidden_image, 0, hidden_image .length);
-
+        Bitmap s_image = BitmapTransfer.getBitmap();
         Embedd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(isImageSelected){
-                    Bitmap c_image = imageToBitmap();
-                    Bitmap stegImage = new Embedding.embedSecretImage(c_image,s_image);
+                    c_image = imageToBitmap();
+                    stegImage = Embedding.embedSecretImage(c_image,s_image);
+                    BitmapTransfer.setBitmap(stegImage);
                     Intent intent = new Intent(Encryption2.this,Encryption3.class);
-
                     startActivity(intent);
+                    finish();
                 }else{
                     Toast.makeText(Encryption2.this, "Provide image", Toast.LENGTH_SHORT).show();
                 }
@@ -99,7 +98,6 @@ public class Encryption2 extends AppCompatActivity {
 
 
     }
-
 
     private void requestStoragePermission() {
         requestPermissions(storagePermission,STORAGE_REQUEST);
@@ -142,7 +140,7 @@ public class Encryption2 extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+       // super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch(requestCode){
             case CAMERA_REQUEST:{
                 if(grantResults.length > 0){
@@ -161,6 +159,7 @@ public class Encryption2 extends AppCompatActivity {
                 if(grantResults.length>0){
                     boolean storage_accepted= grantResults[0]==(PackageManager.PERMISSION_GRANTED);
                     if(storage_accepted){
+                        createDirectory(FolderName);
                         pickFromGallery();
                     }else{
                         Toast.makeText(this,"Please enable storage permission",Toast.LENGTH_SHORT).show();
@@ -169,27 +168,21 @@ public class Encryption2 extends AppCompatActivity {
             }
             break;
         }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+    }
+    private void createDirectory(String folderName){
+
+        File file = new File(Environment.getExternalStorageDirectory(),folderName);
+
+        if(!file.exists()){
+            file.mkdir();
+        }
     }
     private Bitmap imageToBitmap() {
         BitmapDrawable bitmapDrawable = (BitmapDrawable) cover_img.getDrawable();
         Bitmap bitmap = bitmapDrawable.getBitmap();
         return bitmap;
-    }
-
-    public static Bitmap decodeUriToBitmap(Context mContext, Uri sendUri) {
-        Bitmap getBitmap = null;
-        try {
-            InputStream image_stream;
-            try {
-                image_stream = mContext.getContentResolver().openInputStream(sendUri);
-                getBitmap = BitmapFactory.decodeStream(image_stream);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return getBitmap;
     }
 
 

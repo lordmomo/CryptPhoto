@@ -1,4 +1,4 @@
-package com.example.embeddingandencryption;
+package com.MomoDev.CryptPhoto;
 
 import androidx.appcompat.app.AppCompatActivity;
 

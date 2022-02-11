@@ -1,10 +1,9 @@
-package com.example.embeddingandencryption;
+package com.MomoDev.CryptPhoto;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -20,7 +19,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.BinaryBitmap;
@@ -30,25 +28,23 @@ import com.google.zxing.RGBLuminanceSource;
 import com.google.zxing.Reader;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
-import com.squareup.picasso.Picasso;
-import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.security.MessageDigest;
-import java.security.spec.ECField;
+
 import java.util.Base64;
+import java.util.Map;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 public class Decryption extends AppCompatActivity {
 
-    //yaad hos
     public ImageView img;
     public Button ChooseImage,Extract;
     public EditText ePassword;
     public static final int STORAGE_REQUEST = 101;
-    // public static final int IMAGE_PICK_CODE = 102;
 
-
+    public Bitmap stegoImage,steg_bitmap;
+    public Map map;
     String password,message,reqMessage,passMessage;
     String[] storagePermission;
     String AES ="AES";
@@ -102,7 +98,26 @@ public class Decryption extends AppCompatActivity {
 
                 if(isSISelected)
                 {
-                    reqMessage = processTheQR();
+                    //convert stego-image to bitmap.
+                    stegoImage =imageToBitmap();
+                    if(stegoImage != null) {
+                        map = Extracting.extractSecretMessage(stegoImage);
+                    }
+                    else{
+                        Toast.makeText(Decryption.this,"There is no image",Toast.LENGTH_SHORT).show();
+                    }
+
+                    if(map!= null){
+                        String bits =(String) map.get(Constants.MESSAGE_BITS);
+                        byte[] imageBytes = HelperMethods.bitsStreamToByteArray(bits);
+                        steg_bitmap = HelperMethods.byteArrayToBitmap(imageBytes);
+                       // Toast.makeText(Decryption.this,"STEG bitmap caught",Toast.LENGTH_LONG).show();
+
+                    }else{
+                        Toast.makeText(Decryption.this,"Failure during decrypting message",Toast.LENGTH_SHORT).show();
+                    }
+
+                    reqMessage = scanQRImage(steg_bitmap);
                     password = ePassword.getText().toString().trim();
                     if (!password.isEmpty() && !reqMessage.isEmpty()) {
                         try {
@@ -122,35 +137,9 @@ public class Decryption extends AppCompatActivity {
                 else{
                     Toast.makeText(Decryption.this, "Provide image", Toast.LENGTH_SHORT).show();
                 }
-                /*
-                if (!( img.getDrawable() == null)) {
-                    reqMessage = processTheQR();
-                    password = ePassword.getText().toString().trim();
-                    if (!password.isEmpty() && !reqMessage.isEmpty()) {
-                        try {
-                            passMessage= displayMessage(reqMessage, password);
-
-                            Intent intent = new Intent(Decryption.this,DisplayDecryptedMessage.class);
-                            intent.putExtra("dMessage",passMessage);
-                            startActivity(intent);
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        Toast.makeText(Decryption.this, "Provide password.", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else{
-
-                    Toast.makeText(Decryption.this, "Provide image", Toast.LENGTH_SHORT).show();
-
-                }
-                */
             }
         });
     }
-
 
     private void requestStoragePermission() {
         requestPermissions(storagePermission,STORAGE_REQUEST);
@@ -217,14 +206,6 @@ public class Decryption extends AppCompatActivity {
         return contents;
     }
 
-    //Convert the uri of image into bitmap
-    private String processTheQR() {
-        BitmapDrawable bitmapDrawable = (BitmapDrawable) img.getDrawable();
-        Bitmap bitmap = bitmapDrawable.getBitmap();
-        String contents =scanQRImage(bitmap);
-        return contents;
-    }
-
     //Decrypt the payload of Qr code
     private String displayMessage(String reqMessage,String password){
         try {
@@ -235,12 +216,16 @@ public class Decryption extends AppCompatActivity {
         return message;
     }
 
+    private Bitmap imageToBitmap() {
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) img.getDrawable();
+        Bitmap bitmap = bitmapDrawable.getBitmap();
+        return bitmap;
+    }
 
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return super.onSupportNavigateUp();
-
     }
 
 }

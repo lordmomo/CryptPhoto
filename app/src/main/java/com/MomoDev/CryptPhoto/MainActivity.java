@@ -1,4 +1,4 @@
-package com.example.embeddingandencryption;
+package com.MomoDev.CryptPhoto;
 
 import android.Manifest;
 import android.content.Intent;
@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     Button encrypt;
     Button decrypt;
 
+    public static final int CAMERA_REQUEST = 100;
+    public static final int STORAGE_REQUEST = 101;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,9 +27,9 @@ public class MainActivity extends AppCompatActivity {
         encrypt = findViewById(R.id.encrypt_button);
         decrypt = findViewById(R.id.decrypt_button);
 
-        ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.CAMERA},100);
-        ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},101);
-        ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},101);
+        ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.CAMERA},CAMERA_REQUEST);
+        ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},STORAGE_REQUEST);
+        ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},STORAGE_REQUEST);
 
 
         encrypt.setOnClickListener(new View.OnClickListener() {
@@ -54,13 +56,22 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        String Body = "The link is:";
-        String sub = "Put the link here";
-        intent.putExtra(Intent.EXTRA_TEXT, Body);
-        intent.putExtra(Intent.EXTRA_TEXT, sub);
-        startActivity(Intent.createChooser(intent ,"Share Via"));
-        return super.onOptionsItemSelected(item);
+        switch(item.getItemId()) {
+            case R.id.shareButton:
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                String Body = "The link is:";
+                String sub = "Put the link here";
+                intent.putExtra(Intent.EXTRA_TEXT, Body);
+                intent.putExtra(Intent.EXTRA_TEXT, sub);
+                startActivity(Intent.createChooser(intent, "Share Via"));
+
+            case R.id.darkModeButton:
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 }

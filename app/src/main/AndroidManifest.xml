@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.embeddingandencryption">
+    package="com.MomoDev.CryptPhoto">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -14,25 +14,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EmbeddingAndEncryption">
         <activity
-            android:name=".DisplayDecryptedMessage"
+            android:name="com.MomoDev.CryptPhoto.DisplayDecryptedMessage"
             android:exported="false" />
         <activity
-            android:name=".Encryption3"
+            android:name="com.MomoDev.CryptPhoto.Encryption3"
             android:exported="false" />
         <activity
-            android:name=".Encryption2"
+            android:name="com.MomoDev.CryptPhoto.Encryption2"
             android:exported="false" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" /> <!-- optional (needed if default theme has no action bar) -->
         <activity
-            android:name=".Decryption"
+            android:name="com.MomoDev.CryptPhoto.Decryption"
             android:exported="false" />
         <activity
-            android:name=".Encryption"
+            android:name="com.MomoDev.CryptPhoto.Encryption"
             android:exported="false" />
         <activity
-            android:name=".IntroScreen"
+            android:name="com.MomoDev.CryptPhoto.IntroScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,7 +41,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="com.MomoDev.CryptPhoto.MainActivity"
             android:exported="true" />
 
         <meta-data

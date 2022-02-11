@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Encryption2">
 
-
     <ImageView
         android:id="@+id/ivImage"
         android:layout_width="244dp"

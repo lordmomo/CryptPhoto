@@ -1,13 +1,8 @@
-package com.example.embeddingandencryption;
+package com.MomoDev.CryptPhoto;
 
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
-import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -26,7 +21,8 @@ public class Encryption3 extends AppCompatActivity {
 
     ImageView img;
     Button save,share;
-    String[] storagePermission;
+    //public byte[] steg_image;
+    public Bitmap stegoImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +37,8 @@ public class Encryption3 extends AppCompatActivity {
         save = findViewById(R.id.saveBtn);
         share = findViewById(R.id.shareBtn);
 
+        stegoImage= BitmapTransfer.getBitmap();
+        img.setImageBitmap(stegoImage);
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,12 +61,13 @@ public class Encryption3 extends AppCompatActivity {
         BitmapDrawable bitmapDrawable = (BitmapDrawable) img.getDrawable();
         Bitmap finalBitmap = bitmapDrawable.getBitmap();
         String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/SaveNShare");
+        File myDir = new File(root + "/CryptPhotoV2");
         boolean wasSuccessful= myDir.mkdirs();
         if (!wasSuccessful) {
             System.out.println("was not successful.");
         }
-        String fname = "Image-2.png";
+        String rNum= String.valueOf(System.currentTimeMillis());
+        String fname = "CryptPhoto"+rNum+".jpeg";
         File file = new File (myDir, fname);
         if (file.exists ()) file.delete ();
         try {
@@ -104,7 +103,7 @@ public class Encryption3 extends AppCompatActivity {
             imagesFolder.mkdirs();
             File file = new File(imagesFolder,"shared_image.png");
             FileOutputStream stream = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG,50,stream);
+            bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
             stream.flush();
             stream.close();
             contentUri = FileProvider.getUriForFile(this,"com.momodev.savenshare.fileprovider",file);

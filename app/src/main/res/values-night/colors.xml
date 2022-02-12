@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <color name="screen_background">#FD1C1E1E</color>
+    <color name="text_color">#d7eef4</color>
+    <color name="circular_button">#D533D6FF</color>
+    <color name="add_image_icon">#E959E4F6</color>
+
+    <color name="app_color">#2ad4ff</color>
+    <color name="secondary_app_color">#01AFDA</color>
+    <color name="notification_bar_color">#FA000D10</color>
+
+
+</resources>

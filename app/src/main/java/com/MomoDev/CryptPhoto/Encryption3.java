@@ -56,11 +56,8 @@ public class Encryption3 extends AppCompatActivity {
                     SaveImage();
 
                 }else {
-
                     askPermission();
-
                 }
-
             }
         });
 
@@ -80,29 +77,34 @@ public class Encryption3 extends AppCompatActivity {
 
     private void SaveImage()
     {
+
         BitmapDrawable bitmapDrawable = (BitmapDrawable) img.getDrawable();
         Bitmap finalBitmap = bitmapDrawable.getBitmap();
         String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/CryptPhoto");
-        boolean wasSuccessful= myDir.mkdirs();
-        if (!wasSuccessful) {
-            System.out.println("was not successful.");
-        }
-        String rNum= String.valueOf(System.currentTimeMillis());
-        String fname = "CryptPhoto"+rNum+".jpeg";
-        File file = new File (myDir, fname);
-        if (file.exists ()) file.delete ();
-        try {
-            FileOutputStream out = new FileOutputStream(file);
-            finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-            out.flush();
-            out.close();
+        //if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+           // String root = Environment.getStorageDirectory().toString();
+            //File myDir = new File(root + "/CryptPhoto");
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        Toast.makeText(Encryption3.this,"Image Saved",Toast.LENGTH_SHORT).show();
+            File myDir = new File(root + "/CryptPhoto");
+            boolean wasSuccessful = myDir.mkdirs();
+            if (!wasSuccessful) {
+                System.out.println("was not successful.");
+            }
+            String rNum = String.valueOf(System.currentTimeMillis());
+            String fname = "CryptPhoto" + rNum + ".jpeg";
+            File file = new File(myDir, fname);
+            if (file.exists()) file.delete();
+            try {
+                FileOutputStream out = new FileOutputStream(file);
+                finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                out.flush();
+                out.close();
 
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(Encryption3.this, "Image Saved", Toast.LENGTH_SHORT).show();
+       // }
     }
     private void shareImage(){
         Uri contentUri = getContentUri(getApplicationContext());

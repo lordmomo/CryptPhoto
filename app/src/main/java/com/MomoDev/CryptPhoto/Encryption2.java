@@ -37,7 +37,6 @@ public class Encryption2 extends AppCompatActivity {
 
     String[] cameraPermission;
     String[] storagePermission;
-   // String FolderName= "CryptPhotoV2";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +71,7 @@ public class Encryption2 extends AppCompatActivity {
                         requestStoragePermission();
                     }
                     else{
-                       // createDirectory(FolderName);
+
                         pickFromGallery();
                     }
                 }
@@ -159,8 +158,9 @@ public class Encryption2 extends AppCompatActivity {
                 if(grantResults.length>0){
                     boolean storage_accepted= grantResults[0]==(PackageManager.PERMISSION_GRANTED);
                     if(storage_accepted){
-                        //createDirectory(FolderName);
+
                         pickFromGallery();
+
                     }else{
                         Toast.makeText(this,"Please enable storage permission",Toast.LENGTH_SHORT).show();
                     }
@@ -172,15 +172,6 @@ public class Encryption2 extends AppCompatActivity {
 
     }
 
-   /* private void createDirectory(String folderName){
-
-        File file = new File(Environment.getExternalStorageDirectory(),folderName);
-
-        if(!file.exists()){
-            file.mkdir();
-        }
-    }
-    */
 
     private Bitmap imageToBitmap() {
         BitmapDrawable bitmapDrawable = (BitmapDrawable) cover_img.getDrawable();

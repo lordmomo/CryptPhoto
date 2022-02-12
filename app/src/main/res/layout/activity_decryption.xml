@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/screen_background"
     tools:context=".Decryption">
 
 
@@ -104,6 +105,7 @@
         android:layout_width="125dp"
         android:layout_height="27dp"
         android:text="Password"
+        android:textColor="@color/text_color"
         app:layout_constraintBottom_toTopOf="@+id/dPassword"
         app:layout_constraintEnd_toStartOf="@+id/guideline8"
         app:layout_constraintHorizontal_bias="0.084"

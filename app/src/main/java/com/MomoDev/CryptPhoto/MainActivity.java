@@ -2,14 +2,18 @@ package com.MomoDev.CryptPhoto;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 
 public class MainActivity extends AppCompatActivity {
@@ -56,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.shareButton:
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
@@ -65,13 +69,12 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(Intent.EXTRA_TEXT, Body);
                 intent.putExtra(Intent.EXTRA_TEXT, sub);
                 startActivity(Intent.createChooser(intent, "Share Via"));
+                break;
 
             case R.id.darkModeButton:
 
-
-            default:
-                return super.onOptionsItemSelected(item);
-
         }
+        return true;
     }
+
 }

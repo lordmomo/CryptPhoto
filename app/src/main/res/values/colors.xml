@@ -14,8 +14,14 @@
     <color name="light_black">#D0000000</color>
     <color name="white">#FFFFFFFF</color>
 
+
     <color name="screen_background">#FFFFFFFF</color>
     <color name="text_color">#000000</color>
+    <color name="add_image_icon">#F366DD9B</color>
+
+    <color name="app_color">#3DDC84</color>
+    <color name="secondary_app_color">#FF03DAC5</color>
+    <color name="notification_bar_color">#F324AE14</color>
  <!--Color chosen down here-->
     <color name="ToolbarColor">#084895</color>
     <color name="ToolbarColor2">#166AAA</color>

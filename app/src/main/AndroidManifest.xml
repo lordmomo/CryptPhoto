@@ -12,6 +12,7 @@
         android:label="@string/cryptphoto"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.EmbeddingAndEncryption">
         <activity
             android:name="com.MomoDev.CryptPhoto.DisplayDecryptedMessage"

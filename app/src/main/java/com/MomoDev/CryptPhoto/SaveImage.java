@@ -3,7 +3,6 @@ package com.MomoDev.CryptPhoto;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.content.Context;
@@ -24,7 +23,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
-public class Encryption3 extends AppCompatActivity {
+public class SaveImage extends AppCompatActivity {
 
     private static int REQUEST_CODE = 101;
     ImageView img;
@@ -35,7 +34,7 @@ public class Encryption3 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_encryption3);
+        setContentView(R.layout.activity_save_image);
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -51,7 +50,7 @@ public class Encryption3 extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(Encryption3.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                if (ContextCompat.checkSelfPermission(SaveImage.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
 
                     SaveImage();
 
@@ -71,7 +70,7 @@ public class Encryption3 extends AppCompatActivity {
     }
     private void askPermission() {
 
-        ActivityCompat.requestPermissions(Encryption3.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_CODE);
+        ActivityCompat.requestPermissions(SaveImage.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_CODE);
 
     }
 
@@ -103,7 +102,7 @@ public class Encryption3 extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            Toast.makeText(Encryption3.this, "Image Saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SaveImage.this, "Image Saved", Toast.LENGTH_SHORT).show();
        // }
     }
     private void shareImage(){

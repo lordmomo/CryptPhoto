@@ -18,10 +18,10 @@
             android:name="com.MomoDev.CryptPhoto.DisplayDecryptedMessage"
             android:exported="false" />
         <activity
-            android:name="com.MomoDev.CryptPhoto.Encryption3"
+            android:name="com.MomoDev.CryptPhoto.SaveImage"
             android:exported="false" />
         <activity
-            android:name="com.MomoDev.CryptPhoto.Encryption2"
+            android:name="com.MomoDev.CryptPhoto.ImageChoosing"
             android:exported="false" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"

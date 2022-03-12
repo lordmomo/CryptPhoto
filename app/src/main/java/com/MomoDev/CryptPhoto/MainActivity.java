@@ -60,21 +60,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.shareButton:
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                String Body = "The link is:";
-                String sub = "Put the link here";
-                intent.putExtra(Intent.EXTRA_TEXT, Body);
-                intent.putExtra(Intent.EXTRA_TEXT, sub);
-                startActivity(Intent.createChooser(intent, "Share Via"));
-                break;
-
-            case R.id.darkModeButton:
-
-        }
-        return true;
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        String Body = "The link is:";
+        String sub = "Put the link here";
+        intent.putExtra(Intent.EXTRA_TEXT, Body);
+        intent.putExtra(Intent.EXTRA_TEXT, sub);
+        startActivity(Intent.createChooser(intent, "Share Via"));
+        return super.onOptionsItemSelected(item);
     }
 
 }

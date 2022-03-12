@@ -78,7 +78,7 @@ public class Encryption extends AppCompatActivity {
                             try {
                               finalbitmap = qrgEncoder.encodeAsBitmap();
 
-                              //Passing the Qr Code to Encryption2 Activity through BitmapTransfer
+                              //Passing the Qr Code to ImageChoosing Activity through BitmapTransfer
                               BitmapTransfer.setBitmap(finalbitmap);
                               //qrByteArray = ByteToArray(finalbitmap);
                               //SaveImage(finalbitmap);
@@ -90,7 +90,7 @@ public class Encryption extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        Intent intent = new Intent(Encryption.this, Encryption2.class);
+                        Intent intent = new Intent(Encryption.this, ImageChoosing.class);
                         startActivity(intent);
                         finish();
 
@@ -101,7 +101,7 @@ public class Encryption extends AppCompatActivity {
                     }
                 }
                 else{
-                    Toast toast = Toast.makeText(Encryption.this, "enter message and password",Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(Encryption.this, "Enter message and password",Toast.LENGTH_SHORT);
                     toast.show();
                 }
             }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/screen_background"
-    tools:context=".Encryption2">
+    tools:context=".ImageChoosing">
 
     <ImageView
         android:id="@+id/ivImage"
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:background="@drawable/circular_btn"
-        android:text="Choose Image"
+        android:text="@string/choose_image"
         android:fontFamily="@font/krona_one"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -37,7 +37,7 @@
         android:id="@+id/btExtract"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:text="Embedd"
+        android:text="@string/embedd"
         android:fontFamily="@font/krona_one"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"

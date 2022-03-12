@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/screen_background"
-    tools:context=".Encryption3">
+    tools:context=".SaveImage">
 
     <ImageView
         android:id="@+id/imageViewStego"
@@ -26,7 +26,7 @@
         android:layout_height="60dp"
         android:background="@drawable/circular_btn"
         android:fontFamily="@font/krona_one"
-        android:text="Save"
+        android:text="@string/save"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/shareBtn"

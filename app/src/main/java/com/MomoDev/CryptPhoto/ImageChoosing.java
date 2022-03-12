@@ -14,7 +14,6 @@ import android.graphics.drawable.BitmapDrawable;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,9 +22,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
-import java.io.File;
-
-public class Encryption2 extends AppCompatActivity {
+public class ImageChoosing extends AppCompatActivity {
 
      public  ImageView cover_img;
     public  Button ChooseImage,Embedd;
@@ -40,7 +37,7 @@ public class Encryption2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_encryption2);
+        setContentView(R.layout.activity_image_choosing);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Encryption");
@@ -86,11 +83,11 @@ public class Encryption2 extends AppCompatActivity {
                     c_image = imageToBitmap();
                     stegImage = Embedding.embedSecretImage(c_image,s_image);
                     BitmapTransfer.setBitmap(stegImage);
-                    Intent intent = new Intent(Encryption2.this,Encryption3.class);
+                    Intent intent = new Intent(ImageChoosing.this, SaveImage.class);
                     startActivity(intent);
                     finish();
                 }else{
-                    Toast.makeText(Encryption2.this, "Provide image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ImageChoosing.this, "Provide image", Toast.LENGTH_SHORT).show();
                 }
             }
         });
